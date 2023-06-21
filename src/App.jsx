@@ -5,9 +5,12 @@ import Home from "./pages/Home";
 import Footer from "./components/Static/Footer";
 import ModalLogin from "./components/Modal/ModalLogin";
 import ModalPost from "./components/Modal/ModalPost";
+import Post from "./pages/Post";
+import AllPosts from "./pages/AllPosts";
+import Context from "./Contex";
+import Utils, {initialValue as utilValue} from "./Utils";
 
 import './index.css';
-import Context from "./Contex";
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user12"));
@@ -15,9 +18,10 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token12"));
   // const [group, setGroup] = useState(localStorage.getItem("group-12"))
   const [baseData, setBaseData] = useState([]);
-  console.log(token);
+  const [posts, setPosts] = useState(baseData);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalPost, setModalPost] = useState(false);
+  const [searchResult, setSearchResult] = useState("");
   useEffect(() => {
     if (user) {
       setUserId(localStorage.getItem("user12-id"));
@@ -44,7 +48,6 @@ function App() {
         })
     }
   }, [token])
-
   return (<>
   <Context.Provider value={{
     user,
@@ -55,15 +58,24 @@ function App() {
     setBaseData,
     modalPost,
     setModalPost,
-    token
+    token,
+    searchResult,
+    setSearchResult,
+    setPosts,
+    posts,
+    userId
   }}>
+    <Utils.Provider value={utilValue}>
       <Header/>
-      <main>
-      <Home/>
-      </main>
+      <Routes>
+        <Route path="/posts/:id" element={<Post/>}/>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/allposts" element={<AllPosts/>}/>
+      </Routes>
     <Footer/>
     <ModalLogin/>
     <ModalPost/>
+    </Utils.Provider>
     </Context.Provider>
     </>
   );

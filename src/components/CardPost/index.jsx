@@ -7,7 +7,7 @@ import Context from "../../Contex";
 
 import "./style.css"
 
-const CardPost = ({title, image, text, id}) => {
+const CardPost = ({title, image, text, id, author}) => {
     const {token, setBaseData} = useContext(Context);
     const navigate = useNavigate();
     const delPost = () => {
@@ -23,8 +23,7 @@ const CardPost = ({title, image, text, id}) => {
               navigate("/");
           })
   }
-    return <>
-    <Card className="" style={{ 
+    return  <Card style={{ 
       width: '18rem', 
     marginBottom: "1rem", 
     marginRight: "1rem" 
@@ -33,12 +32,17 @@ const CardPost = ({title, image, text, id}) => {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>
+          {author.name}
+        </Card.Text>
+        <Card.Text>
         {text}
         </Card.Text>
-        <Button variant="outline-dark">Читать полностью...</Button><span style={{margin: "1rem", cursor: "pointer"}}><Trash3 onClick={delPost}/></span>
+        <Link to={`/posts/${id}`}><Button variant="outline-dark">Читать далее</Button></Link>
+        <span style={{margin: "1rem", cursor: "pointer"}}>
+          <Trash3 onClick={delPost}/>
+          </span>
       </Card.Body>
     </Card>
-    </>
 }
 
 export default CardPost;

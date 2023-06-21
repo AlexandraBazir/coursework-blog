@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import CardPost from "../components/CardPost";
 import Context from "../Contex";
 
@@ -7,14 +8,13 @@ const Home = () => {
   const {baseData, setModalPost} = useContext(Context);
   const pageSize = 4;
   const [index, setIndex] = useState(0);
-  const [visibleData, setVisibleData] = useState([]);
+const [visibleData, setVisibleData] = useState([]);
   const newPost = () => {
     setModalPost(true)
 };
   useEffect(() => {
     const numberOfItems = pageSize * (index + 1); 
     const newArray = []; 
-
     for(let i= 0; i < baseData.length; i++ ){
       if(i < numberOfItems) 
           newArray.push(baseData[i])
@@ -36,7 +36,7 @@ const Home = () => {
           <Button variant="outline-dark" onClick={newPost}>Новый пост</Button>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <Link className="nav-link" to="/allposts">Все посты</Link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -55,6 +55,7 @@ const Home = () => {
           image={pro.image}
           text={pro.text}
           id={pro._id}
+          author={pro.author}
           />
         ))}
         <Button variant="outline-dark" className="w-25" onClick={() => setIndex (index + 1)}>

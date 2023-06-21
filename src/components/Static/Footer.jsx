@@ -11,7 +11,7 @@ const Footer = () => {
       <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
       <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
     </ul>
-    <p class="text-center text-body-secondary">© 2023 Company, Inc</p>
+    <p class="text-center text-body-secondary">© 2023 Alexandra Bazir</p>
   </footer>
 </div>
     )
