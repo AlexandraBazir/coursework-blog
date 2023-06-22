@@ -9,6 +9,20 @@ class Filter {
         : !el.tags.includes(tag))
         return this;
     }
+    byAuthor(name, flag = true) {
+        this.data = this.data.filter(el => flag 
+            ? el.author.name === name
+        : !el.author.name !== name
+        )
+        return this;
+    }
+    byAuthorId(id, flag = true) {
+        this.data = this.data.filter(el => flag 
+            ? el.author._id === id
+        : !el.author._id !== id
+        )
+        return this;
+    }
 }
 
 
@@ -26,6 +40,12 @@ export const initialValue = {
     return acc;
     }, []),
     getUniqueAuthors: (arr) => arr.reduce((acc, el) => {
+        if (!acc.includes(el.author.name)) {
+            acc.push(el.author.name)
+        }
+        return acc;
+    }, []),
+    getUniqueAuthorsId: (arr) => arr.reduce((acc, el) => {
         if (!acc.includes(el.author._id)) {
             acc.push(el.author._id)
         }

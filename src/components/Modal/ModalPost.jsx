@@ -101,6 +101,7 @@ const ModalPost = () => {
       <Form.Group className="mb-3" controlId="formBasicText">
         <Form.Label>Текст поста</Form.Label>
         <Form.Control type="text"
+                    as="textarea"
                     placeholder="Введите текст поста"
                     value={text}
                     onChange={(e) => setText(e.target.value)}

@@ -7,14 +7,17 @@ import ModalLogin from "./components/Modal/ModalLogin";
 import ModalPost from "./components/Modal/ModalPost";
 import Post from "./pages/Post";
 import AllPosts from "./pages/AllPosts";
+import Favorites from "./pages/Favorites";
 import Context from "./Contex";
 import Utils, {initialValue as utilValue} from "./Utils";
-
+import Profile from "./pages/Profile"
+import blackList from "./data/blackList.json"
 import './index.css';
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user12"));
   const [userId, setUserId] = useState(localStorage.getItem("user12-id"));
+  const [userData, setUserData] = useState({});
   const [token, setToken] = useState(localStorage.getItem("token12"));
   // const [group, setGroup] = useState(localStorage.getItem("group-12"))
   const [baseData, setBaseData] = useState([]);
@@ -48,6 +51,16 @@ function App() {
         })
     }
   }, [token])
+  useEffect(() => {
+    fetch("https://api.react-learning.ru/users/me", {
+      headers: {
+          "Authorization": `Bearer ${token}`,
+      },
+  }).then(res => res.json())
+    .then(data => {
+        setUserData(data);
+    })
+}, [])
   return (<>
   <Context.Provider value={{
     user,
@@ -63,7 +76,9 @@ function App() {
     setSearchResult,
     setPosts,
     posts,
-    userId
+    userId,
+    setUserData,
+    userData
   }}>
     <Utils.Provider value={utilValue}>
       <Header/>
@@ -71,6 +86,8 @@ function App() {
         <Route path="/posts/:id" element={<Post/>}/>
         <Route path="/" element={<Home/>}/>
         <Route path="/allposts" element={<AllPosts/>}/>
+        <Route path="/favorites" element={<Favorites/>}/>
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
     <Footer/>
     <ModalLogin/>

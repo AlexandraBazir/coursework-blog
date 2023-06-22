@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { PersonSquare } from "react-bootstrap-icons";
 import logoImg from "../../../src/image/logo.png";
 import Context from "../../Contex";
 import Search from "../Search";
@@ -16,25 +17,31 @@ const Header = () => {
     setUser(null);
 };
     return (
-    <header class="p-3"> 
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <Link to="/" class="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
-        <img src={logoImg} alt="TravelBlog" class="bi me-2" height="40"/>
-        <span className="logo__text" class="text-white" style={{fontWeight: "bold"}}>TravelBlog</span>
+    <header className="p-3"> 
+    <div className="container">
+        <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <Link to="/" className="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">
+        <img src={logoImg} alt="TravelBlog" className="bi me-2" height="40"/>
+        <span className="logo__text" style={{fontWeight: "bold", color: "white"}}>TravelBlog</span>
         </Link>
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-          {/* <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">About</a></li> */}
+        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="#" className="nav-link px-2 text-white">Home</a></li>
+          {/* <li><a href="#" className="nav-link px-2 text-white">Features</a></li>
+          <li><a href="#" className="nav-link px-2 text-white">Pricing</a></li>
+          <li><a href="#" className="nav-link px-2 text-white">About</a></li> */}
         </ul>
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
           <Search setGoods={setGoods}/>
         </form>
-        <div class="text-end">
-          {!user && <button type="button" class="btn btn-outline-light me-2" onClick={login}>Войти</button>}
-          {user && <button type="button" class="btn btn-light" onClick={logout}>Выйти</button> }
+        <div className="text-end d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          {!user && <button type="button" className="btn btn-outline-light me-2" onClick={login}>Войти</button>}
+          {user && <>
+          <button type="button" className="btn btn-light" onClick={logout}>Выйти</button>
+            <button type="button" className="btn btn-light" style={{marginLeft: "1rem"}}>
+            <Link className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" to="/profile" 
+            style={{fontSize: "1.5rem", color: "black"}}><PersonSquare/></Link>
+            </button>
+          </>}
         </div>
         </div>
         </div>
