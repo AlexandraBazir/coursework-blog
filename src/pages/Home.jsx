@@ -1,14 +1,13 @@
 import { useContext, useState, useEffect } from "react";
-import { Button, Figure, Image, Nav } from "react-bootstrap";
+import { Button, Figure, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import {PencilSquare, XSquare, CheckSquare, Square} from "react-bootstrap-icons";
 import CardPost from "../components/CardPost";
 import notUser from "../image/notuser.png";
 import Context from "../Contex";
 import Utils from "../Utils";
 
 const Home = () => {
-  const { baseData, setModalPost, userId, token, userData, user } = useContext(Context);
+  const { baseData, setModalPost, userId, userData, user } = useContext(Context);
   const { filterPost, getUniqueAuthorsId } = useContext(Utils);
   const [index, setIndex] = useState(0);
   const [visibleData, setVisibleData] = useState([]);
@@ -26,12 +25,12 @@ const Home = () => {
         newArray.push(baseData[i])
     }
     setVisibleData(newArray);
-  }, [index, baseData])
+  }, [index, baseData, pageSize])
 
   useEffect(() => {
     if (tags === userId) {
       setTags(getUniqueAuthorsId(baseData));
-      pageSize = 10;
+      // pageSize = 10;
     }
   }, [])
   

@@ -1,13 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import {useNavigate, Link} from "react-router-dom";
+import { useContext, useState } from "react";
 import Context from "../Contex";
 import { Container, Row, Figure, Button, Col } from "react-bootstrap";
-import {PencilSquare, XSquare, CheckSquare} from "react-bootstrap-icons";
+import {PencilSquare} from "react-bootstrap-icons";
 import UpdUserInput from "../components/UpdUserInput";
 import CardPost from "../components/CardPost";
 
 const Profile = () => {
-    const navigate = useNavigate();
     const {baseData, token, setUserData, userData} = useContext(Context);
     
     const [inpName, setInpName] = useState(false);
@@ -53,13 +51,15 @@ const updUserAva = () => {
           setActiveImg(false)
         });
   }
-  
 return <>
-    <Container>
+    <Container style={{ marginTop: "30px", maxHeight: "100%" }}>
     <Row>
     {userData?.name && <>
+    <Col md="auto" >
           <Figure>
-            <Figure.Image src={userData.avatar} alt={userData.name}/>
+            <Figure.Image src={userData.avatar} 
+            alt={userData.name} 
+            style={{ maxWidth: "350px", objectFit: "cover"}} rounded/>
             <Figure.Caption>
             <UpdUserInput
             val={inpAvatar}
@@ -71,18 +71,20 @@ return <>
             name="avatar"
             />
             {!activeImg ?
-            <Button onClick={() => setActiveImg(true)}>
+            <Button 
+            className="btn-light"
+            style={{display: "flex", justifyContent: "center", padding: "5px"}}
+            onClick={() => setActiveImg(true)}
+            >
               <PencilSquare/>
               </Button>
               : <>
               </>
           }
-
-
-
-
             </Figure.Caption>
             </Figure>
+            </Col>
+            <Col sm={4}>
             <div><UpdUserInput
             val={userData.name}
             isActive={inpName}
@@ -90,7 +92,6 @@ return <>
             upd={updUser}
             name="name"
             /></div>
-
             <div><UpdUserInput
             val={userData.about}
             isActive={inpAbout}
@@ -99,27 +100,26 @@ return <>
             name="about"
             />
             </div>
+            </Col>
           </>}
-
     </Row>
 <Row>
-<Col xs={12}>
+<Col sm={12}>
             <h3>Мои посты</h3>
         </Col>
         {baseData.filter(el => el.author._id === userData._id).map(
-            e => <Col xs={4} lg={2} md={4} key={e._id}>
-                <CardPost {...e}/>
-            </Col>
+            (pro, i) => <CardPost key={i}
+            title={pro.title}
+            image={pro.image}
+            text={pro.text}
+            id={pro._id}
+            author={pro.author}
+            likes={pro.likes}
+            />
         )}
 </Row>
-
-
     </Container>
-
 </>
-
-
-
 }
 
 export default Profile;

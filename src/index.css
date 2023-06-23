@@ -19,6 +19,12 @@ code {
     monospace;
 }
 
-a {
+a, #navbarScrollingDropdown {
   text-decoration: none;
+  color: #1B221B;
+}
+
+a:hover,
+#navbarScrollingDropdown:hover {
+  color: #556155;
 }

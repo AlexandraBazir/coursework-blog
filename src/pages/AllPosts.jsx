@@ -5,33 +5,29 @@ import Context from "../Contex";
 import Utils from "../Utils";
 
 const AllPosts = () => {
-    const {searchResult, posts, userId, baseData} = useContext(Context);
+    const {baseData} = useContext(Context);
     const {filterPost, getUniqueTags, getUniqueAuthors} = useContext(Utils);
     const [filterPosts, setFilterPosts] = useState([])
     const [authors, setAuthors] = useState([]);
     const [tags, setTags] = useState([]);
-    console.log(tags)
     useEffect(() => {
         setAuthors(getUniqueAuthors(baseData));
         setTags(getUniqueTags(baseData));
         setFilterPosts(baseData);
     }, [])
-    return <> <Container>
+    return <> <Container style={{marginTop: "30px"}}>
 <Row>
-{searchResult && <Col className="search-result">
-            {searchResult}
-            </Col>}
-            <Col sm={12}><h1 style={{margin: 0, gridColumnEnd: "span 3"}}>
-                Все посты</h1>
+            <Col md={{ span: 11, offset: 1 }}>
+                <h1>Все посты</h1>
     </Col>
     </Row>
     <Row>
     <Col sm={12}>
     <Nav className="justify-content-end flex-grow-1 pe-3">
     {tags.length > 0 && <> 
-        <NavDropdown title="Фильтр по тегам" id="navbarScrollingDropdown">
+        <NavDropdown title="Фильтр по тегам" id="navbarScrollingDropdown" style={{marginBottom: "10px", color: "#1B221B"}}>
             {tags.map(el => <NavDropdown.Item 
-            onClick={() => setFilterPosts(filterPost(posts).byTag(el).data)}>
+            onClick={() => setFilterPosts(filterPost(baseData).byTag(el).data)}>
                 {el}
                 </NavDropdown.Item>
                 )}

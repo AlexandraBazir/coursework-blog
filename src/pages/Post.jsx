@@ -1,14 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Row, Col, Image, Card, Button, Form, FormGroup, FormLabel, FormControl, Modal } from "react-bootstrap";
-import { Trash3, PencilFill } from "react-bootstrap-icons";
+import { useNavigate } from "react-router-dom";
+import { Container, Row, Col, Image, Card, Button, Form, FormGroup, FormLabel, 
+    FormControl, Modal, Figure, ButtonGroup, Badge } from "react-bootstrap";
+import { Trash3, PencilFill, HandThumbsUp } from "react-bootstrap-icons";
 import UpdPostForm from "../components/UpdPostForm";
 import Context from "../Contex";
 
 
 const Post = () => {
-    const {token, baseData} = useContext(Context);
+    const {token, baseData, setBaseData, userId} = useContext(Context);
     const { id } = useParams();
+    const navigate = useNavigate();
     const [data, setData] = useState({});
     const [allComments, setAllComments] = useState([]);
     const [comment, setComment] = useState([]);
@@ -19,6 +22,19 @@ const Post = () => {
     const [text, setText] = useState(data.text);
     const [tags, setTags] = useState(data.tags);
     const handleClose = () => setModalUpdPost(false);
+    const delPost = () => {
+        fetch(`https://api.react-learning.ru/v2/group-12/posts/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }).then(res => res.json())
+          .then(d => {
+            setBaseData(prev => prev.filter(el => el._id !== id));
+            navigate("/");
+          })
+      }
     const addComment = (e) => {
         e.preventDefault();
         const body = {
@@ -95,42 +111,67 @@ const Post = () => {
             })
     }, [token, id, data])
     return <>
-    <Container>
+    <Container style={{ marginTop: "30px", maxHeight: "100%" }}>
         <Row style={{marginTop: "2rem"}}>
             <Col sm={8}>
-            <Image src={data.image} alt={data.title} fluid /> 
-            <span style={{cursor: "pointer"}}><PencilFill 
-            onClick={() => setModalUpdPost(true)}/></span>
-            <h1>{data.title}</h1>
+            <Image src={data.image} alt={data.title}  
+            style={{ maxWidth: "350px", objectFit: "cover"}}  /> 
+            <h1 style={{margin: "10px 0"}}>{data.title}</h1>
             <p>{data.text}</p>
-            <span>{data.tags}</span>
+            <p>
+            <Badge bg="light" text="dark">{data.tags}</Badge>
+            </p>
             </Col>
             {baseData.filter(el => el._id === data._id).map(
                 (e, i) => <Col key={i} sm={4}>
-                <Image src={e.author.avatar} alt={e.author.name} style={{maxHeight: "6rem"}} rounded />
-                <p>Автор статьи: <br/> {e.author.name}</p>
-              <p>Опубликовано: {new Date(e.created_at).toLocaleDateString()}</p>
-                  <p>Обновлено: {new Date(e.updated_at).toLocaleDateString()}</p>
-                <p>Понравилось: {e.likes.length}</p>
+                    <Figure style={{margin: 0}}>
+                    <Figure.Image 
+                    src={e.author.avatar} 
+                    alt={e.author.name} 
+                    style={{maxHeight: "100px", objectFit: "cover"}} 
+                    roundedCircle/>
+                    <Figure.Caption>
+                    <p style={{marginBottom: "0.5rem"}}>Автор статьи: <br/> {e.author.name}</p>
+                    <p style={{marginBottom: "0.5rem"}}>Опубликовано: {new Date(e.created_at).toLocaleDateString()}</p>
+                  <p style={{marginBottom: "0.5rem"}}>Обновлено: {new Date(e.updated_at).toLocaleDateString()}</p>
+                    </Figure.Caption>
+                    </Figure>
+                <Image/>
+                {e.likes.length !== 0 && <div style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "1.2rem"
+            }}>
+                <HandThumbsUp/> <div style={{ verticalAlign: "center", marginLeft: "4px" }}>
+                     {e.likes.length}
+                     </div>
+                </div>
+                }
+                {data.author._id === userId && <ButtonGroup style={{marginTop: "10px"}}>
+                    <Button className="btn-light" style={{display: "flex", justifyContent: "center"}}><PencilFill 
+            onClick={() => setModalUpdPost(true)}/></Button>
+            <Button variant="secondary" style={{display: "flex", justifyContent: "center"}}><Trash3 onClick={delPost}/></Button>
+            </ButtonGroup>}
                 </Col>
                 )
             }
         </Row>
-        <h2>Комментарии</h2>
+        <h3>Комментарии</h3>
         {allComments.length > 0
                 ?  <div>{allComments.map(el => <Row>
                     <Col>
-                    <Card>
+                    <Card style={{marginBottom: "10px"}}>
                         <Card.Body>
                             <Card.Title><Col><span style={{verticalAlign: "center"}}>
                             <Image src={el.author.avatar} alt={el.author.name} style={{maxHeight: "1.5rem", margin: "0.5rem"}} rounded/>
                                {el.author.name} {new Date(el.created_at).toLocaleDateString()}</span>
                                 </Col>
                                 </Card.Title>
-                            <Card.Text>{el.text}
-                            <span>
-                                <Trash3 onClick={() => delComment(el._id)} style={{cursor: "pointer"}}/>
-                            </span>
+                            <Card.Text style={{padding: "10px"}}>{el.text}
+                           {el.author._id === userId && <div style={{marginTop: "10px"}}>
+                                <Button variant="secondary" style={{display: "flex", justifyContent: "center"}}><Trash3 onClick={() => delComment(el._id)}/>
+                                </Button>
+                            </div>}
                             </Card.Text>
                 </Card.Body>
             </Card>
@@ -140,7 +181,12 @@ const Post = () => {
             : <p>Еще никто не прокомментировал...</p>
         }
     <Row>
-        {hideForm && <Button onClick={() => setHideForm(false)}>Оставить комментарий</Button>}
+        {hideForm && <Button variant="outline-dark" 
+        onClick={() => setHideForm(false)}
+        style={{width: "150px", margin: "10px 10px"}}
+        >
+            Оставить комментарий
+            </Button>}
         {!hideForm && <Col>
         <Form onSubmit={addComment}>
             <FormGroup>
@@ -151,9 +197,16 @@ const Post = () => {
                 onChange={(e) => setComment(e.target.value)}
                 />
             </FormGroup>
-            <Button type="submit">
+            <div style={{margin: "10px 0"}}>
+            <Button variant="outline-secondary" onClick={() => setHideForm(true)}
+           style={{marginRight: "10px"}}
+            >
+            Закрыть
+            </Button>
+            <Button type="submit" variant="outline-success">
             Добавить
             </Button>
+            </div>
         </Form>
         </Col>
         }

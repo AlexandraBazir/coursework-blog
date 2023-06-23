@@ -11,7 +11,7 @@ import Favorites from "./pages/Favorites";
 import Context from "./Contex";
 import Utils, {initialValue as utilValue} from "./Utils";
 import Profile from "./pages/Profile"
-import blackList from "./data/blackList.json"
+import SearchList from "./pages/SearchList";
 import './index.css';
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalPost, setModalPost] = useState(false);
   const [searchResult, setSearchResult] = useState("");
+
   useEffect(() => {
     if (user) {
       setUserId(localStorage.getItem("user12-id"));
@@ -88,6 +89,7 @@ function App() {
         <Route path="/allposts" element={<AllPosts/>}/>
         <Route path="/favorites" element={<Favorites/>}/>
         <Route path="/profile" element={<Profile/>}/>
+        <Route path="/search" element={<SearchList/>}/>
       </Routes>
     <Footer/>
     <ModalLogin/>
