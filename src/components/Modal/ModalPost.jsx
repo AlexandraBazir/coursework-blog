@@ -9,7 +9,7 @@ const ModalPost = () => {
     const [title, setTitle] = useState("");
     const [image, setImage] = useState("");
     const [text, setText] = useState("");
-    const [tags, setTags] = useState(["blogAB"]);
+    const [tags, setTags] = useState(["travel"]);
     const [tagWord, setTagWord] = useState("");
     const tagsHandler = (e) => {
         const val = e.target.value;
@@ -31,7 +31,7 @@ const ModalPost = () => {
         setImage("");
         setText("");
         setTagWord("");
-        setTags(["blogAB"]);
+        setTags(["travel"]);
     }
     const delTag = (e) => {
         const val = e.target.innerText;
@@ -43,8 +43,7 @@ const ModalPost = () => {
             title: title,
             image: image,
             text: text,
-            tags: tagWord && !tags.includes(tagWord) ? [...tags, tagWord] : tags,
-            isPublished: true
+            tags: tagWord && !tags.includes(tagWord) ? [...tags, tagWord] : tags
         };
         fetch("https://api.react-learning.ru/v2/group-12/posts", {
             method: "POST",
@@ -111,15 +110,14 @@ const ModalPost = () => {
         <Form.Label>Теги</Form.Label>
         <Form.Control 
         type="text"
-                    placeholder="Добавить теги"
+                    placeholder="Добавьте теги"
                     value={tagWord}
                     onChange={tagsHandler}
                      />
                       <Form.Text as="div" className="mt-1 d-flex" style={{gap: ".25rem"}}>
                             {tags.map(tg => <Button 
                             key={tg} 
-                            variant={tg === "df" ? "warning" : "secondary"}
-                            disabled={tg === "df"}
+                            variant={tg === "travel" ? "outline-success" : "secondary"}
                             onClick={delTag}
                             >{tg}</Button>)}
                         </Form.Text>

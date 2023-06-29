@@ -2,7 +2,6 @@ import { useContext } from "react";
 import Context from "../Contex";
 import CardPost from "../components/CardPost";
 import { Container, Row, Col } from "react-bootstrap";
-import Utils from "../Utils";
 
 const Favorites = () => {
     const { userId, baseData } = useContext(Context);
@@ -15,8 +14,8 @@ const Favorites = () => {
         <Row>
         <Col sm={12}>
             <Row className="justify-content-center align-self-center">
-        {baseData.filter(el => el.likes.includes(userId)).map((pro, i) => (
-                <CardPost key={i} 
+        {baseData.filter(el => el.likes.includes(userId)).map((pro) => (
+                <CardPost key={pro._id} 
                 title={pro.title}
           image={pro.image}
           text={pro.text}

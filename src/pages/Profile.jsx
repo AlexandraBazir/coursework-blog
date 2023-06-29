@@ -108,7 +108,7 @@ return <>
             <h3>Мои посты</h3>
         </Col>
         {baseData.filter(el => el.author._id === userData._id).map(
-            (pro, i) => <CardPost key={i}
+            (pro) => <CardPost key={pro._id}
             title={pro.title}
             image={pro.image}
             text={pro.text}

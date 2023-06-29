@@ -86,7 +86,6 @@ const Post = () => {
                 setModalUpdPost(false);
             })
     } 
-   
     useEffect(() => {
         fetch(`https://api.react-learning.ru/v2/group-12/posts/${id}`, {
             headers: {
@@ -118,12 +117,20 @@ const Post = () => {
             style={{ maxWidth: "350px", objectFit: "cover"}}  /> 
             <h1 style={{margin: "10px 0"}}>{data.title}</h1>
             <p>{data.text}</p>
-            <p>
-            <Badge bg="light" text="dark">{data.tags}</Badge>
-            </p>
+            {/* <div>
+                {(data.tags).map(el => <Badge key={el} style={{margin: "5px"}}>{el}</Badge>)}
+            </div> */}
+
+            <>
+    
+           <Badge bg="light" 
+            text="dark" style={{marginBottom: "10px"}}>
+                {data.tags}
+                </Badge>
+           </>
             </Col>
             {baseData.filter(el => el._id === data._id).map(
-                (e, i) => <Col key={i} sm={4}>
+                (e) => <Col key={e._id} sm={4}>
                     <Figure style={{margin: 0}}>
                     <Figure.Image 
                     src={e.author.avatar} 
@@ -137,16 +144,18 @@ const Post = () => {
                     </Figure.Caption>
                     </Figure>
                 <Image/>
-                {e.likes.length !== 0 && <div style={{
+                <div style={{
               display: "flex",
               alignItems: "center",
               fontSize: "1.2rem"
             }}>
+                {e.likes.length !== 0 && <>
                 <HandThumbsUp/> <div style={{ verticalAlign: "center", marginLeft: "4px" }}>
                      {e.likes.length}
                      </div>
-                </div>
+                     </>
                 }
+                </div>
                 {data.author._id === userId && <ButtonGroup style={{marginTop: "10px"}}>
                     <Button className="btn-light" style={{display: "flex", justifyContent: "center"}}><PencilFill 
             onClick={() => setModalUpdPost(true)}/></Button>

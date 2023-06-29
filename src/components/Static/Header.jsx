@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PersonSquare } from "react-bootstrap-icons";
 import logoImg from "../../../src/image/logo.png";
 import Context from "../../Contex";
@@ -8,6 +8,7 @@ import Search from "../Search";
 import "./style.css";
 
 const Header = () => {
+  const navigate = useNavigate();
     const { user, setUser, setModalOpen, setGoods } = useContext(Context);
     const login = () => {
       setModalOpen(true)
@@ -15,6 +16,7 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("user12")
     setUser(null);
+    navigate("/")
 };
     return (
     <header className="p-3"> 
@@ -24,13 +26,13 @@ const Header = () => {
         <img src={logoImg} alt="TravelBlog" height="40"/>
         <span className="nav-link px-2 text-white" style={{fontWeight: "bold", color: "white"}}>TravelBlog</span>
         </Link>
-        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        {user && <><ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><Link to="/allposts" className="nav-link px-2 text-white">Все посты</Link></li>
           <li><Link to="/favorites" className="nav-link px-2 text-white">Избранное</Link></li>
         </ul>
         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
           <Search setGoods={setGoods}/>
-        </form>
+        </form> </>}
         <div className="text-end d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           {!user && <button type="button" className="btn btn-outline-light me-2" onClick={login}>Войти</button>}
           {user && <>

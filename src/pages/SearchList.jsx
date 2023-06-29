@@ -17,8 +17,8 @@ const SearchList = () => {
     <Row>
     <Col sm={12}>
     <Row className="justify-content-center align-self-center">
-        {posts.map((pro, i) => (
-    <CardPost key={i} image={pro.image} {...pro} 
+        {posts.map((pro) => (
+    <CardPost key={pro._id} image={pro.image} {...pro} 
     id={pro._id}/>))}
     </Row>
     </Col>

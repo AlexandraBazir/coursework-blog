@@ -61,8 +61,8 @@ const Home = () => {
         </div>
         <div className="col-sm-10">
           <div className="row justify-content-center align-self-center">
-            {visibleData.map((pro, i) => (
-              <CardPost key={i}
+            {visibleData.map((pro) => (
+              <CardPost key={pro._id}
                 title={pro.title}
                 image={pro.image}
                 text={pro.text}
