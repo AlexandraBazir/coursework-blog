@@ -5,8 +5,6 @@ import logoImg from "../../../src/image/logo.png";
 import Context from "../../Contex";
 import Search from "../Search";
 
-import "./style.css";
-
 const Header = () => {
   const navigate = useNavigate();
     const { user, setUser, setModalOpen, setGoods } = useContext(Context);
@@ -19,7 +17,7 @@ const Header = () => {
     navigate("/")
 };
     return (
-    <header className="p-3"> 
+    <header className="p-3" style={{backgroundColor: "#556155"}}> 
     <div className="container">
         <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <Link to="/" className="d-flex align-items-center mb-2 mb-lg-0 text-black text-decoration-none">

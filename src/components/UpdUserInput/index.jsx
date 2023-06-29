@@ -4,7 +4,6 @@ import {PencilSquare, Check2, X} from "react-bootstrap-icons";
 
 const UpdUserInput = ({
     val, 
-    
     isActive, 
     changeActive, 
     data, 
