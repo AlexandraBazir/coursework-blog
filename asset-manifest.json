@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/parallax-fairytale/static/css/main.2a0756f1.css",
+    "main.js": "/parallax-fairytale/static/js/main.85f3a73d.js",
+    "static/media/notuser.png": "/parallax-fairytale/static/media/notuser.28e44cb7f5d2425541e5.png",
+    "static/media/logo.png": "/parallax-fairytale/static/media/logo.1efdcfdde834d67230a7.png",
+    "index.html": "/parallax-fairytale/index.html",
+    "main.2a0756f1.css.map": "/parallax-fairytale/static/css/main.2a0756f1.css.map",
+    "main.85f3a73d.js.map": "/parallax-fairytale/static/js/main.85f3a73d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2a0756f1.css",
+    "static/js/main.85f3a73d.js"
+  ]
+}
